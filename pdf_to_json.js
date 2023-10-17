@@ -7,7 +7,7 @@ const pdfBuffer = fs.readFileSync(pdfFilePath);
 
 // data structure for our parsed output
 const sections = {
-	personal: {}
+	personal: {},
 	education: {},
 	workExperience: {},
 	skills: {},
@@ -129,6 +129,3 @@ let options = {
  
 // Run PDF parser (populates sections) 
 PDFParser(pdfBuffer, options)
-
-// Output json
-// fs.writeFile(sections)
