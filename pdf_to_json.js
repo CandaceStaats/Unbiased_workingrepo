@@ -13,17 +13,95 @@ const sections = {
 };
 
 
-function process_text_content(textContent) {
-	// parser that loops through all the text objects in the pdf
+function process_diff_y(textContent){
+	var listY = [];
 	let lastY, text = '';
 	for (let item of textContent.items) {
-		item_x = item.transform[4]
-		item_y = item.transform[5]
-		item_str = item.str
-		console.log(item_str)
-
+		lastY = item.transform[5];
+		listY.push(lastY);
+		
 	}
+	for (var i = 0; i < listY.length; i++) {
+		console.log(listY[i]);
+	  }
+}
+
+
+
+function process_x(textContent) {
+	// parser that loops through all the text objects in the pdf
+	// let lastY, text = ' ';
+	// for (let item of textContent.items) {
+	// 	item_x = item.transform[4]
+	// 	item_y = item.transform[5]
+	// 	item_str = item.str
+	// 	console.log(item_str)
+	// }
+	// return text;
+	let lastX, text = '';
+	for (let item of textContent.items) {
+		if (lastX == item.transform[4] || !lastX){
+			text += item.str;
+		}
+		else{
+			text += '\n' + item.str;
+		}
+		lastX = item.transform[4];
+	}
+	console.log(text)
+	//fs.writeFileSync('output.txt', JSON.stringify(text));
 	return text;
+}
+
+
+function process_styles(textContent) {
+	// parser that loops through all the text objects in the pdf
+	// let lastY, text = ' ';
+	// for (let item of textContent.items) {
+	// 	item_x = item.transform[4]
+	// 	item_y = item.transform[5]
+	// 	item_str = item.str
+	// 	console.log(item_str)
+	// }
+	// return text;
+	let font, text = '';
+	for (let item of textContent.styles) {
+		if (font == item.styles || !font){
+			text += item.str;
+		}
+		else{
+			text += '\n' + item.str;
+		}
+		font = item.styles;
+	}
+	console.log(text)
+	//fs.writeFileSync('output.txt', JSON.stringify(text));
+	return text
+}
+
+function process_text_content(textContent) {
+	// parser that loops through all the text objects in the pdf
+	// let lastY, text = ' ';
+	// for (let item of textContent.items) {
+	// 	item_x = item.transform[4]
+	// 	item_y = item.transform[5]
+	// 	item_str = item.str
+	// 	console.log(item_str)
+	// }
+	// return text;
+	let lastY, text = '';
+	for (let item of textContent.items) {
+		if (lastY == item.transform[5] || !lastY){
+			text += item.str;
+		}
+		else{
+			text += '\n' + item.str;
+		}
+		lastY = item.transform[5];
+	}
+	console.log(text)
+	//fs.writeFileSync('output.txt', JSON.stringify(text));
+	return text
 }
 
 // PDFParser library configuration
@@ -45,4 +123,4 @@ let options = {
 PDFParser(pdfBuffer, options)
 
 // Output json
-fs.writeFile(sections)
+// fs.writeFile(sections)
