@@ -7,19 +7,26 @@ const pdfBuffer = fs.readFileSync(pdfFilePath);
 
 // data structure for our parsed output
 const sections = {
+	personal: {}
 	education: {},
 	workExperience: {},
-	skills: {}
+	skills: {},
+	miscellaneous: {}
 };
 
-
-function process_diff_y(textContent){
-	var listY = [];
+/** 
+ * @brief	Retrieve the following information on every text component:
+ * 			item_x		The item's X coordinate (float).
+ * 			item_y		The item's Y coordinate (float).
+ * 			item_str	The item's text content (string).
+ */
+function process_text_content(textContent) {
 	let lastY, text = '';
 	for (let item of textContent.items) {
-		lastY = item.transform[5];
-		listY.push(lastY);
-		
+		item_x = item.transform[4]
+		item_y = item.transform[5]
+		item_str = item.str
+		console.log(item_str)
 	}
 	for (var i = 0; i < listY.length; i++) {
 		console.log(listY[i]);
