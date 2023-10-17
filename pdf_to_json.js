@@ -1,44 +1,48 @@
 const fs = require('fs');
 const PDFParser = require('pdf-parse');
-// // import { PdfReader } from "pdfreader";
-// const pdf2html = require('pdf2html');
-// ​
-// ​
+
 const pdfFilePath = 'Resume-Paris.pdf';
-// ​
-// const parsePDF = async () => {
-// ​
-// 	const html = await pdf2html.html(pdfFilePath);
-// 	console.log();
-// 	fs.writeFileSync('output.html', JSON.stringify(html));
-// }
-// ​
 
-const parsePDF = async () => {
- 	const pdfBuffer = fs.readFileSync(pdfFilePath);
- 	const pdf = await PDFParser(pdfBuffer);
- 	const text = pdf.text;
+const pdfBuffer = fs.readFileSync(pdfFilePath);
 
- 	const sections = {
- 		education: {},
- 		workExperience: {},
- 		skills: {}
- 	};
- 	 //console.log(text);
-	console.log(pdf);
-	fs.writeFileSync('output.txt', JSON.stringify(pdf));
-
-// ​ fs.readFile(pdfFilePath, (err, pdfBuffer) => {
-// 	//pdfBuffer contains the file content
-// 	new PdfReader().parseBuffer(pdfBuffer, (err, item) => {
-//  		if (err) console.error("error:", err);
-//  		else if (!item) console.warn("end of buffer");
-//  		else if (item.text) console.log(item.text);
-//  	});
-//  });​
- 	return sections;
+// data structure for our parsed output
+const sections = {
+	education: {},
+	workExperience: {},
+	skills: {}
 };
 
-parsePDF().then((sections) => {
-	console.log(sections);
-});
+
+function process_text_content(textContent) {
+	// parser that loops through all the text objects in the pdf
+	let lastY, text = '';
+	for (let item of textContent.items) {
+		item_x = item.transform[4]
+		item_y = item.transform[5]
+		item_str = item.str
+		console.log(item_str)
+
+	}
+	return text;
+}
+
+// PDFParser library configuration
+function render_page(pageData) {
+    //check documents https://mozilla.github.io/pdf.js/
+    let render_options = {
+        //replaces all occurrences of whitespace with standard spaces (0x20). The default value is `false`.
+        normalizeWhitespace: false,
+        //do not attempt to combine same line TextItem's. The default value is `false`.
+        disableCombineTextItems: false
+    }
+    return pageData.getTextContent(render_options).then(process_text_content);
+}
+let options = {
+    pagerender: render_page
+}
+ 
+// Run PDF parser (populates sections) 
+PDFParser(pdfBuffer, options)
+
+// Output json
+fs.writeFile(sections)
