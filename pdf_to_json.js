@@ -100,7 +100,7 @@ function process_text_content(textContent) {
 	for (let item of textContent.items) {
 		if (lastY == item.transform[5] || !lastY){
 			text += item.str;
-			console.log(textContent.styles[item.fontName])
+			//console.log(textContent.styles[item.fontName])
 		}
 		else{
 			text += '\n' + item.str;
