@@ -4,7 +4,7 @@ const PDFParser = require('pdf-parse');
 // const pdf2html = require('pdf2html');
 // ​
 // ​
-// const pdfFilePath = 'Resume-Paris.pdf';
+const pdfFilePath = 'Resume-Paris.pdf';
 // ​
 // const parsePDF = async () => {
 // ​
@@ -13,9 +13,6 @@ const PDFParser = require('pdf-parse');
 // 	fs.writeFileSync('output.html', JSON.stringify(html));
 // }
 // ​
-// parsePDF().then((sections) => {
-// 	console.log(sections);
-// });
 
 const parsePDF = async () => {
  	const pdfBuffer = fs.readFileSync(pdfFilePath);
@@ -28,7 +25,7 @@ const parsePDF = async () => {
  		skills: {}
  	};
  	 //console.log(text);
-	//console.log(pdf);
+	console.log(pdf);
 	fs.writeFileSync('output.txt', JSON.stringify(pdf));
 
 // ​ fs.readFile(pdfFilePath, (err, pdfBuffer) => {
@@ -41,3 +38,7 @@ const parsePDF = async () => {
 //  });​
  	return sections;
 };
+
+parsePDF().then((sections) => {
+	console.log(sections);
+});
