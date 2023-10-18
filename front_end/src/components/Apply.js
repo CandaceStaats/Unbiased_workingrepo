@@ -33,7 +33,7 @@ function Apply() {
 	let {jobToken} = useParams()
 	useEffect(() => {
 		console.log(jobToken)
-		axios.get(`https://localhost:3333/apply/${jobToken}`)
+		axios.get(`https://localhost:3000/apply/${jobToken}`)
 		.then(res => {
 			console.log(res)
 			setJobTitle(res.title) // adapt name to match backend
@@ -60,7 +60,7 @@ function Apply() {
 			education: education,
 			achivements: achivements
 		}
-		axios.post(`https://localhost:3333/apply/form`, { formUpload })
+		axios.post(`https://localhost:3000/apply/form`, { formUpload })
 			.then(res => {
 				console.log(res)
 				console.log(res.data)
