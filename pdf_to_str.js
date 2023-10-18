@@ -60,7 +60,7 @@ let options = {
 async function pdf_normalize(path) {
 	let buf = fs.readFileSync(path);
 	let parsedFile = await PDFParser(path, options);
-	return parsedFile;
+	return parsedFile.text;
 }
 
 // For testing purposes:
