@@ -20,7 +20,12 @@ function process_text_content(textContent) {
 			{
 				text += '\n'
 			}
-			text += '\n' + item.str;
+			if (item.str == '●' || item.str == '-'){
+				text += '\n' + item.str + ' ';
+			}
+			else{
+				text += '\n' + item.str;
+			}
 		}
 		lastY = item.transform[5];
 		styleAscent = textContent.styles[item.fontName].ascent
