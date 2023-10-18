@@ -2,6 +2,14 @@
 const fs = require('fs');
 const PDFParser = require('pdf-parse');
 
+// Error class
+class NormalizationError extends Error {
+	constructor(message) {
+		super(message);
+		this.name = "NormalizationError"
+	}
+}
+
 /**
  * @brief	Convert the PDF's text to a normalized form; inserting
  * 			line breaks between lines and sections.
@@ -12,18 +20,15 @@ function process_text_content(textContent) {
 	let lastY, text = '';
 	let styleAscent;
 	for (let item of textContent.items) {
-		if (lastY == item.transform[5] || !lastY){
+		if (lastY == item.transform[5] || !lastY) {
 			text += item.str;
-		}
-		else{
-			if (styleAscent != textContent.styles[item.fontName].ascent)
-			{
-				text += '\n'
+		} else {
+			if (styleAscent != textContent.styles[item.fontName].ascent) {
+				text += '\n';
 			}
-			if (item.str == '●' || item.str == '-'){
+			if (item.str == '●' || item.str == '-') {
 				text += '\n' + item.str + ' ';
-			}
-			else{
+			} else {
 				text += '\n' + item.str;
 			}
 		}
@@ -51,23 +56,41 @@ let options = {
     pagerender: render_page
 }
 
+async function pdfbuf_normalize(buf) {
+	let parsedBuf;
+	try {
+		parsedBuf = await PDFParser(buf, options);
+	} catch (error) {
+		throw new NormalizationError("Normalization couldn't be performed");
+	}
+	return parsedBuf.text;
+}
+
 /**
  * @brief	Extract raw text from a PDF file. Multiple consecutive
  * 			line breaks delineate sections.
  * @param	path	Path to the PDF to extract.
  * @return	The raw text, as one string.
  */
-async function pdf_normalize(path) {
-	let buf = fs.readFileSync(path);
-	let parsedFile = await PDFParser(path, options);
-	return parsedFile.text;
+function pdf_normalize(path) {
+	let buf;
+	try {
+		buf = fs.readFileSync(path);
+	} catch (error) {
+		throw new NormalizationError("Normalization couldn't be performed")
+	}
+	return pdfbuf_normalize(buf)
 }
 
-// For testing purposes:
+// Usage example:
 async function test() {
 	const testPath = 'Resume-Paris.pdf';
-	let str = await pdf_normalize(testPath);
-	console.log(str);
+	let str;
+	try {
+		str = await pdf_normalize(testPath);
+		console.log(str);
+	} catch (e) {
+		console.error(e);
+	}
 }
-
 test();
