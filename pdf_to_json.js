@@ -14,98 +14,22 @@ const sections = {
 	miscellaneous: {}
 };
 
-/** 
- * @brief	Retrieve the following information on every text component:
- * 			item_x		The item's X coordinate (float).
- * 			item_y		The item's Y coordinate (float).
- * 			item_str	The item's text content (string).
- */
 function process_text_content(textContent) {
 	let lastY, text = '';
-	for (let item of textContent.items) {
-		item_x = item.transform[4]
-		item_y = item.transform[5]
-		item_str = item.str
-		console.log(item_str)
-	}
-	for (var i = 0; i < listY.length; i++) {
-		console.log(listY[i]);
-	  }
-}
-
-
-
-function process_x(textContent) {
-	// parser that loops through all the text objects in the pdf
-	// let lastY, text = ' ';
-	// for (let item of textContent.items) {
-	// 	item_x = item.transform[4]
-	// 	item_y = item.transform[5]
-	// 	item_str = item.str
-	// 	console.log(item_str)
-	// }
-	// return text;
-	let lastX, text = '';
-	for (let item of textContent.items) {
-		if (lastX == item.transform[4] || !lastX){
-			text += item.str;
-		}
-		else{
-			text += '\n' + item.str;
-		}
-		lastX = item.transform[4];
-	}
-	console.log(text)
-	//fs.writeFileSync('output.txt', JSON.stringify(text));
-	return text;
-}
-
-
-// function process_styles(textContent) {
-// 	// parser that loops through all the text objects in the pdf
-// 	// let lastY, text = ' ';
-// 	// for (let item of textContent.items) {
-// 	// 	item_x = item.transform[4]
-// 	// 	item_y = item.transform[5]
-// 	// 	item_str = item.str
-// 	// 	console.log(item_str)
-// 	// }
-// 	// return text;
-// 	let font, text = '';
-// 	for (let item of textContent.styles) {
-// 		if (font == style.ascent || !font){
-// 			text += style.str;
-// 		}
-// 		else{
-// 			text += '\n' + style.str;
-// 		}
-// 		font = textContent.styles[style.ascent;
-// 	}
-// 	console.log(text)
-// 	//fs.writeFileSync('output.txt', JSON.stringify(text));
-// 	return text
-// }
-
-function process_text_content(textContent) {
-	// parser that loops through all the text objects in the pdf
-	// let lastY, text = ' ';
-	// for (let item of textContent.items) {
-	// 	item_x = item.transform[4]
-	// 	item_y = item.transform[5]
-	// 	item_str = item.str
-	// 	console.log(item_str)
-	// }
-	// return text;
-	let lastY, text = '';
+	let styleAscent;
 	for (let item of textContent.items) {
 		if (lastY == item.transform[5] || !lastY){
 			text += item.str;
-			//console.log(textContent.styles[item.fontName])
 		}
 		else{
+			if (styleAscent != textContent.styles[item.fontName].ascent)
+			{
+				text += '\n'
+			}
 			text += '\n' + item.str;
 		}
 		lastY = item.transform[5];
+		styleAscent = textContent.styles[item.fontName].ascent
 	}
 	console.log(text)
 	//fs.writeFileSync('output.txt', JSON.stringify(text));
