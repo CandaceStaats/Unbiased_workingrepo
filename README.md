@@ -1,3 +1,10 @@
+# Unbiased
+
+The hackathon is over, thanks for all your contibutions!
+
+This repository is now closed, but you can continue to contribute at https://github.com/adabtive/Unbiased
+
+
 # Prerequisites
 - [Tilt](https://tilt.dev/)
 - [minikube](https://minikube.sigs.k8s.io/docs/start/)
