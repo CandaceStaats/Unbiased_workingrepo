@@ -35,8 +35,6 @@ function process_text_content(textContent) {
 		lastY = item.transform[5];
 		styleAscent = textContent.styles[item.fontName].ascent
 	}
-	console.log(text)
-	//fs.writeFileSync('output.txt', JSON.stringify(text));
 	return text
 }
 
