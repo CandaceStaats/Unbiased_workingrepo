@@ -20,3 +20,7 @@ Then the applicant will see a “success” pop up for a “fail” pop up, to i
 ## INFO REQUIRED ON THE PAGE:
  (displayed): Company name and job title (filled in based on the url’s encryption).
  (to be filled): Full name, email of the applicant, upload CV button, and submit button.
+
+
+# Approved design on Figma
+https://www.figma.com/file/cAlvw6lslIAG2VHKMVQklz/Unbiased?type=design&node-id=0%3A1&mode=design&t=RryBieHihllHmqdb-1 
