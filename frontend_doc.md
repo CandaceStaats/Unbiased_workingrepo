@@ -23,5 +23,5 @@ In case the applicant can't/doesn't want to upload its CV in PDF format, there i
  (to be filled): Full name, email of the applicant, upload CV button, and submit button.
 
 
-# Approved design on Figma
-https://www.figma.com/file/cAlvw6lslIAG2VHKMVQklz/Unbiased?type=design&node-id=0%3A1&mode=design&t=RryBieHihllHmqdb-1 
+# Approved design mockups on Figma
+https://www.figma.com/file/Aev5dxSM8k9dhnT6FHHgoi/adaptive-test?type=design&node-id=0%3A1&mode=design&t=rA7gcQyN0nrCu7me-1
