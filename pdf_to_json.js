@@ -1,19 +1,13 @@
+// Import libraries
 const fs = require('fs');
 const PDFParser = require('pdf-parse');
 
-const pdfFilePath = 'Resume-Paris.pdf';
-
-const pdfBuffer = fs.readFileSync(pdfFilePath);
-
-// data structure for our parsed output
-const sections = {
-	personal: {},
-	education: {},
-	workExperience: {},
-	skills: {},
-	miscellaneous: {}
-};
-
+/**
+ * @brief	Convert the PDF's text to a normalized form; inserting
+ * 			line breaks between lines and sections.
+ * @param	textContent The text content member of the PDF file.
+ * @returns Normalized text.
+ */
 function process_text_content(textContent) {
 	let lastY, text = '';
 	let styleAscent;
@@ -47,9 +41,28 @@ function render_page(pageData) {
     }
     return pageData.getTextContent(render_options).then(process_text_content);
 }
+
 let options = {
     pagerender: render_page
 }
- 
-// Run PDF parser (populates sections) 
-PDFParser(pdfBuffer, options)
+
+/**
+ * @brief	Extract raw text from a PDF file. Multiple consecutive
+ * 			line breaks delineate sections.
+ * @param	path	Path to the PDF to extract.
+ * @return	The raw text, as one string.
+ */
+async function pdf_normalize(path) {
+	let buf = fs.readFileSync(path);
+	let parsedFile = await PDFParser(path, options);
+	return parsedFile;
+}
+
+// For testing purposes:
+async function test() {
+	const testPath = 'Resume-Paris.pdf';
+	let str = await pdf_normalize(testPath);
+	console.log(str);
+}
+
+test();
