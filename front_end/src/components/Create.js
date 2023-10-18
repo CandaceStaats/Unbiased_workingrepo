@@ -14,6 +14,10 @@ function Create() {
 
 	function onSubmit(e){
 		e.preventDefault();
+		if (jobTitle === "" || companyName === "" || companyEmail === "")
+		{
+			console.log("please fill in all the fields")
+		}
 		let jobPost={
 			companyName: companyName,
 			jobTitle: jobTitle,
