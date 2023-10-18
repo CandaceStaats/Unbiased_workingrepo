@@ -83,7 +83,7 @@ function pdf_normalize(path) {
 }
 
 // Usage example:
-async function test() {
+/*async function test() {
 	const testPath = 'Resume-Paris.pdf';
 	let str;
 	try {
@@ -93,4 +93,4 @@ async function test() {
 		console.error(e);
 	}
 }
-test();
+test();*/
